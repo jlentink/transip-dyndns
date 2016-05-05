@@ -30,6 +30,14 @@ $ transip-dyndns.php  --username myusername --private-key /home/foo/key.pem --do
 5. Copy the generated key and place it into a text file. For example: private-key.txt
 6. Run the command with with the correct parameters. Voila! you're done.
 
-$ *git clone https://github.com/jlentink/transip-dyndns.git*
+```
+$ git clone https://github.com/jlentink/transip-dyndns.git
+$ cd transip-dyndns/lib
+$ wget https://api.transip.nl/downloads/transapi_transip.nl_v5_2.tar.gz
+$ tar -zxf transapi_transip.nl_v5_2.tar.gz
+$ cd ..
+$ ./transip-dyndns.php --username foo --private-key bar.txt --domain foo.bar.com
+
+```
 
 
