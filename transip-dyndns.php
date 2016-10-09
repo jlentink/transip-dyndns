@@ -1,8 +1,27 @@
 #!/usr/bin/env php
 <?php
 
-require "lib/Transip/ApiSettings.php";
-require "lib/Transip/DomainService.php";
+define('APP_ROOT', dirname(__FILE__) . '/');
+
+function writeError($message){
+    $fh = fopen('php://stderr','a');
+    fwrite($fh, $message);
+    fclose($fh);
+}
+
+if(!is_file(APP_ROOT . 'lib/Transip/ApiSettings.php')){
+    writeError("Could not find transip api.\n");
+    exit(2);
+}
+
+if(!class_exists("SOAPClient")){
+    writeError("The soap module is not enabled.\n");
+    exit(2);
+}
+
+
+require APP_ROOT . 'lib/Transip/ApiSettings.php';
+require APP_ROOT . 'lib/Transip/DomainService.php';
 
 $username = null;
 $privateKey = null;
@@ -13,7 +32,7 @@ $publicIp = file_get_contents('https://api.ipify.org');
 $options = getopt("u:p:d:", ["username:", "private-key:", "domain:"]);
 
 if(!isset($options['u']) && !isset($options['username'])){
-    print "No username provider\n";
+    writeError("No username provider\n");
     exit(2);
 } else {
     if(isset($options['username'])){
@@ -24,7 +43,7 @@ if(!isset($options['u']) && !isset($options['username'])){
 }
 
 if(!isset($options['p']) && !isset($options['private-key'])){
-    print "No private key provider\n";
+    writeError("No private key provider\n");
     exit(2);
 }else {
     if(isset($options['private-key'])){
@@ -34,14 +53,14 @@ if(!isset($options['p']) && !isset($options['private-key'])){
     }
 
     if(!is_readable($privateKey) || !is_file($privateKey)){
-        print "Private key is not readable\n";
+        writeError("Private key is not readable\n");
         exit(2);
     }
 
 }
 
 if(!isset($options['d']) && !isset($options['domain'])){
-    print "No domain provider\n";
+    writeError("No domain provider\n");
     exit(2);
 }else {
     if(isset($options['domain'])){
@@ -87,6 +106,6 @@ try {
 }
 
 catch(SoapFault $e) {
-    print 'An error occurred: ' . $e->getMessage() . "\n";
+    writeError('An error occurred: ' . $e->getMessage() . "\n");
 }
 

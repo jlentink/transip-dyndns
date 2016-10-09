@@ -36,7 +36,7 @@ $ cd transip-dyndns/lib
 $ wget https://api.transip.nl/downloads/transapi_transip.nl_v5_2.tar.gz
 $ tar -zxf transapi_transip.nl_v5_2.tar.gz
 $ cd ..
-$ ./transip-dyndns.php --username foo --private-key bar.txt --domain foo.bar.com
+$ ./transip-dyndns.php --username foo --private-key private-key.txt --domain foo.bar.com
 
 ```
 
