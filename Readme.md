@@ -1,3 +1,5 @@
+Single more handy binary can be found a: https://github.com/jlentink/go-transip-dyndns
+
 #Transip Dyndns script
 
 ##usage
